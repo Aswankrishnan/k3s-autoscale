@@ -1,0 +1,324 @@
+
+Report Summary
+
+┌───────────────────┬────────────┬───────────────────┐
+│      Target       │    Type    │ Misconfigurations │
+├───────────────────┼────────────┼───────────────────┤
+│ 00-namespace.yaml │ kubernetes │         0         │
+├───────────────────┼────────────┼───────────────────┤
+│ 10-app.yaml       │ kubernetes │         4         │
+├───────────────────┼────────────┼───────────────────┤
+│ 20-hpa.yaml       │ kubernetes │         2         │
+├───────────────────┼────────────┼───────────────────┤
+│ 30-ingress.yaml   │ kubernetes │         2         │
+├───────────────────┼────────────┼───────────────────┤
+│ 40-netpol.yaml    │ kubernetes │         4         │
+├───────────────────┼────────────┼───────────────────┤
+│ 50-quota.yaml     │ kubernetes │         3         │
+└───────────────────┴────────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+10-app.yaml (kubernetes)
+========================
+Tests: 105 (SUCCESSES: 101, FAILURES: 4)
+Failures: 4 (UNKNOWN: 0, LOW: 4, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+
+KSV-0039 (LOW): A LimitRange policy with a default requests and limits for each container should be configured
+════════════════════════════════════════
+Ensure that a LimitRange policy is configured to limit resource usage for namespaces or nodes
+
+See https://avd.aquasec.com/misconfig/ksv-0039
+────────────────────────────────────────
+ 10-app.yaml:11-54
+────────────────────────────────────────
+  11 ┌   labels: {app: api}
+  12 │ spec:
+  13 │   replicas: 1
+  14 │   selector:
+  15 │     matchLabels: {app: api}
+  16 │   template:
+  17 │     metadata:
+  18 │       labels: {app: api}
+  19 └     spec:
+  ..   
+────────────────────────────────────────
+
+
+KSV-0039 (LOW): A LimitRange policy with a default requests and limits for each container should be configured
+════════════════════════════════════════
+Ensure that a LimitRange policy is configured to limit resource usage for namespaces or nodes
+
+See https://avd.aquasec.com/misconfig/ksv-0039
+────────────────────────────────────────
+ 10-app.yaml:58-61
+────────────────────────────────────────
+  58 ┌ kind: Service
+  59 │ metadata: {name: api, namespace: autoscale-demo}
+  60 │ spec:
+  61 └   selector: {app: api}
+────────────────────────────────────────
+
+
+KSV-0040 (LOW): A resource quota policy with hard memory and CPU limits should be configured per namespace
+════════════════════════════════════════
+Ensure that a ResourceQuota policy is configured to limit aggregate resource usage within a namespace
+
+See https://avd.aquasec.com/misconfig/ksv-0040
+────────────────────────────────────────
+ 10-app.yaml:11-54
+────────────────────────────────────────
+  11 ┌   labels: {app: api}
+  12 │ spec:
+  13 │   replicas: 1
+  14 │   selector:
+  15 │     matchLabels: {app: api}
+  16 │   template:
+  17 │     metadata:
+  18 │       labels: {app: api}
+  19 └     spec:
+  ..   
+────────────────────────────────────────
+
+
+KSV-0040 (LOW): A resource quota policy with hard memory and CPU limits should be configured per namespace
+════════════════════════════════════════
+Ensure that a ResourceQuota policy is configured to limit aggregate resource usage within a namespace
+
+See https://avd.aquasec.com/misconfig/ksv-0040
+────────────────────────────────────────
+ 10-app.yaml:58-61
+────────────────────────────────────────
+  58 ┌ kind: Service
+  59 │ metadata: {name: api, namespace: autoscale-demo}
+  60 │ spec:
+  61 └   selector: {app: api}
+────────────────────────────────────────
+
+
+
+20-hpa.yaml (kubernetes)
+========================
+Tests: 101 (SUCCESSES: 99, FAILURES: 2)
+Failures: 2 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+
+KSV-0039 (LOW): A LimitRange policy with a default requests and limits for each container should be configured
+════════════════════════════════════════
+Ensure that a LimitRange policy is configured to limit resource usage for namespaces or nodes
+
+See https://avd.aquasec.com/misconfig/ksv-0039
+────────────────────────────────────────
+ 20-hpa.yaml:4-19
+────────────────────────────────────────
+   4 ┌ spec:
+   5 │   scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: api}
+   6 │   minReplicas: 1
+   7 │   maxReplicas: 5
+   8 │   metrics:
+   9 │     - type: Resource
+  10 │       resource:
+  11 │         name: cpu
+  12 └         target: {type: Utilization, averageUtilization: 60}
+  ..   
+────────────────────────────────────────
+
+
+KSV-0040 (LOW): A resource quota policy with hard memory and CPU limits should be configured per namespace
+════════════════════════════════════════
+Ensure that a ResourceQuota policy is configured to limit aggregate resource usage within a namespace
+
+See https://avd.aquasec.com/misconfig/ksv-0040
+────────────────────────────────────────
+ 20-hpa.yaml:4-19
+────────────────────────────────────────
+   4 ┌ spec:
+   5 │   scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: api}
+   6 │   minReplicas: 1
+   7 │   maxReplicas: 5
+   8 │   metrics:
+   9 │     - type: Resource
+  10 │       resource:
+  11 │         name: cpu
+  12 └         target: {type: Utilization, averageUtilization: 60}
+  ..   
+────────────────────────────────────────
+
+
+
+30-ingress.yaml (kubernetes)
+============================
+Tests: 101 (SUCCESSES: 99, FAILURES: 2)
+Failures: 2 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+
+KSV-0039 (LOW): A LimitRange policy with a default requests and limits for each container should be configured
+════════════════════════════════════════
+Ensure that a LimitRange policy is configured to limit resource usage for namespaces or nodes
+
+See https://avd.aquasec.com/misconfig/ksv-0039
+────────────────────────────────────────
+ 30-ingress.yaml:4-11
+────────────────────────────────────────
+   4 ┌ spec:
+   5 │   rules:
+   6 │     - http:
+   7 │         paths:
+   8 │           - path: /
+   9 │             pathType: Prefix
+  10 │             backend:
+  11 └               service: {name: api, port: {number: 80}}
+────────────────────────────────────────
+
+
+KSV-0040 (LOW): A resource quota policy with hard memory and CPU limits should be configured per namespace
+════════════════════════════════════════
+Ensure that a ResourceQuota policy is configured to limit aggregate resource usage within a namespace
+
+See https://avd.aquasec.com/misconfig/ksv-0040
+────────────────────────────────────────
+ 30-ingress.yaml:4-11
+────────────────────────────────────────
+   4 ┌ spec:
+   5 │   rules:
+   6 │     - http:
+   7 │         paths:
+   8 │           - path: /
+   9 │             pathType: Prefix
+  10 │             backend:
+  11 └               service: {name: api, port: {number: 80}}
+────────────────────────────────────────
+
+
+
+40-netpol.yaml (kubernetes)
+===========================
+Tests: 103 (SUCCESSES: 99, FAILURES: 4)
+Failures: 4 (UNKNOWN: 0, LOW: 4, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+
+KSV-0039 (LOW): A LimitRange policy with a default requests and limits for each container should be configured
+════════════════════════════════════════
+Ensure that a LimitRange policy is configured to limit resource usage for namespaces or nodes
+
+See https://avd.aquasec.com/misconfig/ksv-0039
+────────────────────────────────────────
+ 40-netpol.yaml:4-6
+────────────────────────────────────────
+   4 ┌ spec:
+   5 │   podSelector: {}
+   6 └   policyTypes: [Ingress, Egress]
+────────────────────────────────────────
+
+
+KSV-0039 (LOW): A LimitRange policy with a default requests and limits for each container should be configured
+════════════════════════════════════════
+Ensure that a LimitRange policy is configured to limit resource usage for namespaces or nodes
+
+See https://avd.aquasec.com/misconfig/ksv-0039
+────────────────────────────────────────
+ 40-netpol.yaml:10-20
+────────────────────────────────────────
+  10 ┌ metadata: {name: allow-traefik-to-api, namespace: autoscale-demo}
+  11 │ spec:
+  12 │   podSelector:
+  13 │     matchLabels: {app: api}
+  14 │   policyTypes: [Ingress]
+  15 │   ingress:
+  16 │     - from:
+  17 │         - namespaceSelector:
+  18 └             matchLabels:
+  ..   
+────────────────────────────────────────
+
+
+KSV-0040 (LOW): A resource quota policy with hard memory and CPU limits should be configured per namespace
+════════════════════════════════════════
+Ensure that a ResourceQuota policy is configured to limit aggregate resource usage within a namespace
+
+See https://avd.aquasec.com/misconfig/ksv-0040
+────────────────────────────────────────
+ 40-netpol.yaml:4-6
+────────────────────────────────────────
+   4 ┌ spec:
+   5 │   podSelector: {}
+   6 └   policyTypes: [Ingress, Egress]
+────────────────────────────────────────
+
+
+KSV-0040 (LOW): A resource quota policy with hard memory and CPU limits should be configured per namespace
+════════════════════════════════════════
+Ensure that a ResourceQuota policy is configured to limit aggregate resource usage within a namespace
+
+See https://avd.aquasec.com/misconfig/ksv-0040
+────────────────────────────────────────
+ 40-netpol.yaml:10-20
+────────────────────────────────────────
+  10 ┌ metadata: {name: allow-traefik-to-api, namespace: autoscale-demo}
+  11 │ spec:
+  12 │   podSelector:
+  13 │     matchLabels: {app: api}
+  14 │   policyTypes: [Ingress]
+  15 │   ingress:
+  16 │     - from:
+  17 │         - namespaceSelector:
+  18 └             matchLabels:
+  ..   
+────────────────────────────────────────
+
+
+
+50-quota.yaml (kubernetes)
+==========================
+Tests: 103 (SUCCESSES: 100, FAILURES: 3)
+Failures: 3 (UNKNOWN: 0, LOW: 3, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+
+KSV-0039 (LOW): A LimitRange policy with a default requests and limits for each container should be configured
+════════════════════════════════════════
+Ensure that a LimitRange policy is configured to limit resource usage for namespaces or nodes
+
+See https://avd.aquasec.com/misconfig/ksv-0039
+────────────────────────────────────────
+ 50-quota.yaml:4-10
+────────────────────────────────────────
+   4 ┌ spec:
+   5 │   hard:
+   6 │     requests.cpu: "1"
+   7 │     limits.cpu: "2"
+   8 │     requests.memory: 1Gi
+   9 │     limits.memory: 2Gi
+  10 └     pods: "10"
+────────────────────────────────────────
+
+
+KSV-0039 (LOW): A LimitRange policy with a default requests and limits for each container should be configured
+════════════════════════════════════════
+Ensure that a LimitRange policy is configured to limit resource usage for namespaces or nodes
+
+See https://avd.aquasec.com/misconfig/ksv-0039
+────────────────────────────────────────
+ 50-quota.yaml:14-18
+────────────────────────────────────────
+  14 ┌ metadata: {name: defaults, namespace: autoscale-demo}
+  15 │ spec:
+  16 │   limits:
+  17 │     - type: Container
+  18 └       default:        {cpu: 300m, memory: 192Mi}
+────────────────────────────────────────
+
+
+KSV-0040 (LOW): A resource quota policy with hard memory and CPU limits should be configured per namespace
+════════════════════════════════════════
+Ensure that a ResourceQuota policy is configured to limit aggregate resource usage within a namespace
+
+See https://avd.aquasec.com/misconfig/ksv-0040
+────────────────────────────────────────
+ 50-quota.yaml:14-18
+────────────────────────────────────────
+  14 ┌ metadata: {name: defaults, namespace: autoscale-demo}
+  15 │ spec:
+  16 │   limits:
+  17 │     - type: Container
+  18 └       default:        {cpu: 300m, memory: 192Mi}
+────────────────────────────────────────
+
+

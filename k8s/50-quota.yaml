@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata: {name: ns-quota, namespace: autoscale-demo}
+spec:
+  hard:
+    requests.cpu: "1"
+    limits.cpu: "2"
+    requests.memory: 1Gi
+    limits.memory: 2Gi
+    pods: "10"
+---
+apiVersion: v1
+kind: LimitRange
+metadata: {name: defaults, namespace: autoscale-demo}
+spec:
+  limits:
+    - type: Container
+      default:        {cpu: 300m, memory: 192Mi}
+      defaultRequest: {cpu: 100m, memory: 64Mi}
