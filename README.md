@@ -155,7 +155,7 @@ encryption, and more).
 
 ## 9. Demo video
 
-[Link to demo video] — shows the full Normal → Increased → Scale-out →
+(https://github.com/Aswankrishnan/k3s-autoscale/blob/main/demo.mp4) — shows the full Normal → Increased → Scale-out →
 Reduced → Scale-in cycle, with `kubectl get hpa,pods` visible throughout.
 
 ## 10. Reproducibility
